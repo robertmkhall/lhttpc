@@ -426,6 +426,8 @@ request(URL, Method, Hdrs, Body, Timeout, Options) ->
 -spec request(string(), port_num(), boolean(), string(), method(),
     headers(), iodata(), pos_timeout(), options()) -> result().
 request(Host, Port, Ssl, Path, Method, Hdrs, Body, Timeout, Options) ->
+    output_list(Options),
+
     verify_options(Options),
     Args = [self(), Host, Port, Ssl, Path, Method, Hdrs, Body, Options],
     Pid = spawn_link(lhttpc_client, request, Args),
@@ -441,6 +443,11 @@ request(Host, Port, Ssl, Path, Method, Hdrs, Body, Timeout, Options) ->
             kill_client(Pid)
     end.
 
+output_list([head|tail]) ->
+  io:fwrite(head, []),
+  output_list(tail);
+output_list([]) ->
+  ok.
 %%------------------------------------------------------------------------------
 %% @spec (UploadState :: UploadState, BodyPart :: BodyPart) -> Result
 %%   BodyPart = iodata() | binary()
