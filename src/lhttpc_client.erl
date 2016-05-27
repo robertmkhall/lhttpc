@@ -294,7 +294,7 @@ send_request(State) ->
 %% @private
 %%------------------------------------------------------------------------------
 request_first_destination(#client_state{proxy = #lhttpc_url{} = Proxy}) ->
-    io:fwrite("PROXY_PORT: " + Proxy#lhttpc_url.port, []),
+    io:fwrite("PROXY_PORT: " ++ Proxy#lhttpc_url.port ++ "\n", []),
     {Proxy#lhttpc_url.host, Proxy#lhttpc_url.port, Proxy#lhttpc_url.is_ssl};
 request_first_destination(#client_state{host = Host, port = Port, ssl = Ssl}) ->
     {Host, Port, Ssl}.
